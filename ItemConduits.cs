@@ -6,8 +6,12 @@ namespace ItemConduits
 	{
         public override void Load()
         {
-            ItemContainerLib.APIs.ItemContainerUtil.TryGetItemContainer(0, 0, out _);
-            base.Load();
+            ModAsset.Load(this);
+        }
+
+        public override void Unload()
+        {
+            ModAsset.Unload();
         }
     }
 }

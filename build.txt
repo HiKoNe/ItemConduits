@@ -1,8 +1,10 @@
 displayName = Item Conduits
 author = HiKoNe
 version = 0.1
+homepage = https://forums.terraria.org/index.php?threads/hikones-mods.109167/#:~:text=%3E-,Item%20Conduits,-%3A%20%E2%80%8B
 hideCode = false
 hideResources = false
 includeSource = true
 includePDB = true
 modReferences = ConduitLib, ItemContainerLib
+buildIgnore = ConduitLib/*, ItemContainerLib/*
