@@ -1,4 +1,7 @@
+using ItemConduits.Contents;
+using Terraria.ID;
 using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
 
 namespace ItemConduits
 {
@@ -6,8 +9,23 @@ namespace ItemConduits
 	{
         public override void Load()
         {
-            ItemContainerLib.APIs.ItemContainerUtil.TryGetItemContainer(0, 0, out _);
-            base.Load();
+            ModAsset.Load(this);
+        }
+
+        public override void Unload()
+        {
+            ModAsset.Unload();
+        }
+
+        public override void AddRecipes()
+        {
+            base.AddRecipes();
+
+            CreateRecipe(ItemType<ItemItemConduit>())
+                .AddIngredient(ItemID.Actuator)
+                .AddIngredient(ItemType<ConduitShell>())
+                .AddTile(TileID.Anvils)
+                .Register();
         }
     }
 }
