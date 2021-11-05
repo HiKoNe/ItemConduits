@@ -1,0 +1,24 @@
+Mods:
+{
+	ConduitLib:
+	{
+		ItemName:
+		{
+			ItemItemConduit: Item Conduit
+		}
+		ItemTooltip:
+		{
+			ItemItemConduit: For transfer Items.
+		}
+		UI:
+		{
+			Priority: Priority
+			RoundRobinEnable: Round-Robin: Enabled
+			RoundRobinDisabled: Round-Robin: Disabled
+			WireModeEnable: '''Wire Mode: Enabled
+				Active by wire hit.'''
+			WireModeDisabled: '''Wire Mode: Disabled
+				Active every second.'''
+		}
+	}
+}

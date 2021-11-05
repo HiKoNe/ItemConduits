@@ -11,6 +11,7 @@ using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.UI;
@@ -119,29 +120,29 @@ namespace ItemConduits.Contents
 
         public override void OnInitializeUI(ref UIPanel panel, StyleDimension rightDim, StyleDimension topDim)
         {
-            var priority = new UIValue(Priority, "Priority")
+            var priority = new UIValue(Priority, Language.GetTextValue("Mods.ConduitLib.UI.Priority"))
             {
                 Top = topDim,
                 OnChange = (value) => Priority = (int)value,
             };
             panel.Append(priority);
 
-            var roundRobin = new UIToggle(ConduitAsset.Button[3], ConduitAsset.Button[4], RoundRobin)
+            var roundRobin = new UIToggle(ModAsset.Button[0], ModAsset.Button[1], RoundRobin)
             {
                 Outline = ConduitAsset.Button[0],
                 Top = topDim,
                 Left = rightDim,
-                Description = () => "Round-Robin: " + (RoundRobin ? "Enabled" : "Disabled"),
+                Description = () => RoundRobin ? Language.GetTextValue("Mods.ConduitLib.UI.RoundRobinEnable") : Language.GetTextValue("Mods.ConduitLib.UI.RoundRobinDisabled"),
                 OnToggle = (toggle) => RoundRobin = toggle,
             };
             panel.Append(roundRobin);
 
-            var wireMode = new UIToggle(ConduitAsset.Button[5], ConduitAsset.Button[6], WireMode)
+            var wireMode = new UIToggle(ModAsset.Button[2], ModAsset.Button[3], WireMode)
             {
                 Outline = ConduitAsset.Button[0],
                 Top = topDim,
                 Left = rightDim,
-                Description = () => "Wire Mode: " + (WireMode ? "Enabled" : "Disabled") + (WireMode ? "\nActive by wire hit" : "\nActive every second"),
+                Description = () => WireMode ? Language.GetTextValue("Mods.ConduitLib.UI.WireModeEnable") : Language.GetTextValue("Mods.ConduitLib.UI.WireModeDisabled"),
                 OnToggle = (toggle) => WireMode = toggle,
             };
             wireMode.Left.Pixels += roundRobin.Width.Pixels + panel.PaddingLeft;

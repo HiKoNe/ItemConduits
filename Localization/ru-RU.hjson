@@ -1,0 +1,24 @@
+Mods:
+{
+	ConduitLib:
+	{
+		ItemName:
+		{
+			ItemItemConduit: Предметная труба
+		}
+		ItemTooltip:
+		{
+			ItemItemConduit: Для транспортировки предметов.
+		}
+		UI:
+		{
+			Priority: Приоритет
+			RoundRobinEnable: Режим по-круговой: Включен
+			RoundRobinDisabled: Режим по-круговой: Отключен
+			WireModeEnable: '''Режим Сигнал-Провода: Включен
+				Активен по сигналу провода.'''
+			WireModeDisabled: '''Режим Сигнал-Провода: Отключен
+				Активен каждую секунду.'''
+		}
+	}
+}

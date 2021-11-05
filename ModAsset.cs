@@ -11,6 +11,7 @@ namespace ItemConduits
         static readonly BindingFlags flags = BindingFlags.Public | BindingFlags.Static | BindingFlags.SetProperty;
 
         public static Asset<Texture2D>[] ItemConduit { get; set; }
+        public static Asset<Texture2D>[] Button { get; set; }
 
         internal static void Load(Mod mod)
         {
@@ -30,6 +31,7 @@ namespace ItemConduits
         internal static void Unload()
         {
             ItemConduit = null;
+            Button = null;
         }
     }
 }
