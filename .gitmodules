@@ -1,6 +1,3 @@
 [submodule "ItemContainerLib"]
 	path = ItemContainerLib
 	url = https://github.com/HiKoNe/ItemContainerLib
-[submodule "ConduitLib"]
-	path = ConduitLib
-	url = https://github.com/HiKoNe/ConduitLib
