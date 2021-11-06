@@ -1,6 +1,6 @@
 displayName = Item Conduits
 author = HiKoNe
-version = 0.1.1.0
+version = 0.1.2.0
 homepage = https://forums.terraria.org/index.php?threads/hikones-mods.109167/#:~:text=%3E-,Item%20Conduits,-%3A%20%E2%80%8B
 hideCode = false
 hideResources = false

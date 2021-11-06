@@ -120,7 +120,7 @@ namespace ItemConduits.Contents
 
         public override void OnInitializeUI(ref UIPanel panel, StyleDimension rightDim, StyleDimension topDim)
         {
-            var priority = new UIValue(Priority, Language.GetTextValue("Mods.ConduitLib.UI.Priority"))
+            var priority = new UIValue(Priority, Language.GetTextValue("Mods.ItemConduits.UI.Priority"))
             {
                 Top = topDim,
                 OnChange = (value) => Priority = (int)value,
@@ -132,7 +132,7 @@ namespace ItemConduits.Contents
                 Outline = ConduitAsset.Button[0],
                 Top = topDim,
                 Left = rightDim,
-                Description = () => RoundRobin ? Language.GetTextValue("Mods.ConduitLib.UI.RoundRobinEnable") : Language.GetTextValue("Mods.ConduitLib.UI.RoundRobinDisabled"),
+                Description = () => RoundRobin ? Language.GetTextValue("Mods.ItemConduits.UI.RoundRobinEnable") : Language.GetTextValue("Mods.ItemConduits.UI.RoundRobinDisabled"),
                 OnToggle = (toggle) => RoundRobin = toggle,
             };
             panel.Append(roundRobin);
@@ -142,7 +142,7 @@ namespace ItemConduits.Contents
                 Outline = ConduitAsset.Button[0],
                 Top = topDim,
                 Left = rightDim,
-                Description = () => WireMode ? Language.GetTextValue("Mods.ConduitLib.UI.WireModeEnable") : Language.GetTextValue("Mods.ConduitLib.UI.WireModeDisabled"),
+                Description = () => WireMode ? Language.GetTextValue("Mods.ItemConduits.UI.WireModeEnable") : Language.GetTextValue("Mods.ItemConduits.UI.WireModeDisabled"),
                 OnToggle = (toggle) => WireMode = toggle,
             };
             wireMode.Left.Pixels += roundRobin.Width.Pixels + panel.PaddingLeft;
