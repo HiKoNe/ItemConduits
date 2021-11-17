@@ -42,6 +42,7 @@ namespace ItemConduits.Contents
         }
 
         public override int? UpdateDelay => WireMode ? null : 60;
+        public override bool UseFilters => true;
         public override Asset<Texture2D> Texture => ModAsset.ItemConduit[0];
         public override Asset<Texture2D> WrenchIcon => TextureAssets.Item[ModContent.ItemType<ItemItemConduit>()];
 
@@ -118,7 +119,7 @@ namespace ItemConduits.Contents
             return base.OnDraw(spriteBatch, ref frameX, ref frameY, ref alpha);
         }
 
-        public override void OnInitializeUI(ref UIPanel panel, StyleDimension rightDim, StyleDimension topDim)
+        public override void OnInitializeUI(ref UIPanel panel, StyleDimension rightDim, ref StyleDimension topDim)
         {
             var priority = new UIValue(Priority, Language.GetTextValue("Mods.ItemConduits.UI.Priority"))
             {
@@ -146,6 +147,9 @@ namespace ItemConduits.Contents
                 OnToggle = (toggle) => WireMode = toggle,
             };
             wireMode.Left.Pixels += roundRobin.Width.Pixels + panel.PaddingLeft;
+
+            topDim.Pixels += roundRobin.Height.Pixels + panel.PaddingLeft;
+
             panel.Append(wireMode);
         }
 
