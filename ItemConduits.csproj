@@ -10,4 +10,8 @@
   <ItemGroup>
     <PackageReference Include="tModLoader.CodeAssist" Version="0.1.*" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ConduitLib\ConduitLib.csproj" />
+    <ProjectReference Include="..\ItemContainerLib\ItemContainerLib.csproj" />
+  </ItemGroup>
 </Project>

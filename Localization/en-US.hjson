@@ -4,21 +4,31 @@ Mods:
 	{
 		ItemName:
 		{
-			ItemItemConduit: Item Conduit
+			ItemItemConduit: "Item Conduit"
+			ItemFilter: "Item Filter"
+			AdvancedItemFilter: "Advanced Item Filter"
+			CustomItemFilter: "Custom Item Filter"
+			StackUpgrade: "Stack Upgrade"
 		}
 		ItemTooltip:
 		{
-			ItemItemConduit: For transfer Items.
+			ItemItemConduit: "For transfer Items."
+			ItemFilter: "Allows you to filter items."
+			AdvancedItemFilter: "Allows you to filter x2 items."
+			CustomItemFilter: "Allows you to filter items by name."
 		}
 		UI:
 		{
-			Priority: Priority
-			RoundRobinEnable: Round-Robin: Enabled
-			RoundRobinDisabled: Round-Robin: Disabled
+			Priority: "Priority"
+			RoundRobinEnable: "Round-Robin: Enabled"
+			RoundRobinDisabled: "Round-Robin: Disabled"
 			WireModeEnable: '''Wire Mode: Enabled
 				Active by wire hit.'''
 			WireModeDisabled: '''Wire Mode: Disabled
 				Active every second.'''
+			StackUpgradeSlot: '''Stack upgrade slot
+				Default stack: 1.'''
+			Multiplier: "Current multiplier: {0}"
 		}
 	}
 }

@@ -4,23 +4,23 @@ using Terraria.ID;
 
 namespace ItemConduits.Contents.Filters
 {
-    public class ItemFilter : AbstractItemFilter
+    public class AdvancedItemFilter : AbstractItemFilter
     {
-        public override int FiltersCount => 3;
+        public override int FiltersCount => 6;
         public override bool Condition(int index, object obj) => obj is Item item && !conditions[index].IsAir && conditions[index].type == item.type;
 
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.rare = ItemRarityID.Blue;
-            Item.value = Item.buyPrice(0, 0, 20, 0);
+            Item.rare = ItemRarityID.Red;
+            Item.value = Item.buyPrice(0, 1, 0, 0);
         }
 
         public override void AddRecipes()
         {
             CreateRecipe(1)
-                .AddIngredient<EmptyConduitFilter>()
-                .AddIngredient<ItemItemConduit>()
+                .AddIngredient<AdvancedEmptyConduitFilter>()
+                .AddIngredient<ItemFilter>()
                 .AddTile(TileID.TinkerersWorkbench)
                 .Register();
         }

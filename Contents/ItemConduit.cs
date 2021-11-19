@@ -1,6 +1,7 @@
 ﻿using ConduitLib;
 using ConduitLib.APIs;
 using ConduitLib.UIs.Elements;
+using ItemConduits.Contents.UIs;
 using ItemContainerLib.APIs;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -24,12 +25,14 @@ namespace ItemConduits.Contents
         protected int priority;
         protected bool roundRobin;
         protected bool wireMode = true;
+        protected Item stackUpgrade = new();
 
         public IItemContainer ItemContainer { get; set; }
         public bool RoundRobin { get => roundRobin; set { roundRobin = value; UpdateConduit(); } }
         public int Priority { get => priority; set { priority = value; UpdateConduit(); } }
         public bool WireMode { get => wireMode; set { wireMode = value; UpdateConduit(); } }
-        public int MaxTransfer => 4;
+        public Item StackUpgrade { get => stackUpgrade; set { stackUpgrade = value; UpdateConduit(); } }
+        public int MaxTransfer => (int)Math.Pow(2, StackUpgrade.stack);
         public override List<ModConduit> Network
         {
             get => base.Network; set
@@ -40,7 +43,6 @@ namespace ItemConduits.Contents
                     network.Sort((c, c2) => ((ItemConduit)c2).Priority.CompareTo(((ItemConduit)c).Priority));
             }
         }
-
         public override int? UpdateDelay => WireMode ? null : 60;
         public override bool UseFilters => true;
         public override Asset<Texture2D> Texture => ModAsset.ItemConduit[0];
@@ -67,11 +69,19 @@ namespace ItemConduits.Contents
                     if (item.stack < 1)
                         continue;
 
+                    var filter = GetFilter(false);
+                    if (filter is not null && filter.AnyConditions(item) ^ filter.IsWhitelist)
+                        continue;
+
                     int toTransfer = item.stack = Math.Min(item.stack, MaxTransfer);
 
                     for (int c = 0; c < Network.Count; c++)
                     {
                         var itemConduit = (ItemConduit)Network[c];
+
+                        var filter2 = itemConduit.GetFilter(true);
+                        if (filter2 is not null && filter2.AnyConditions(item) ^ filter2.IsWhitelist)
+                            continue;
 
                         if (RoundRobin)
                         {
@@ -107,6 +117,8 @@ namespace ItemConduits.Contents
             var pos = Position.ToVector2() * 16;
             SoundEngine.PlaySound(SoundID.Dig, pos);
             Item.NewItem(pos, ModContent.ItemType<ItemItemConduit>(), 1, false, 0, true);
+            if (!StackUpgrade.IsAir)
+                Item.NewItem(pos, StackUpgrade.type, StackUpgrade.stack, false, 0, true);
         }
 
         public override bool OnDraw(in SpriteBatch spriteBatch, ref int frameX, ref int frameY, ref float? alpha)
@@ -119,7 +131,7 @@ namespace ItemConduits.Contents
             return base.OnDraw(spriteBatch, ref frameX, ref frameY, ref alpha);
         }
 
-        public override void OnInitializeUI(ref UIPanel panel, StyleDimension rightDim, ref StyleDimension topDim)
+        public override void OnInitializeUI(UIPanel panel, StyleDimension rightDim, ref StyleDimension topDim)
         {
             var priority = new UIValue(Priority, Language.GetTextValue("Mods.ItemConduits.UI.Priority"))
             {
@@ -148,20 +160,50 @@ namespace ItemConduits.Contents
             };
             wireMode.Left.Pixels += roundRobin.Width.Pixels + panel.PaddingLeft;
 
-            topDim.Pixels += roundRobin.Height.Pixels + panel.PaddingLeft;
+            var stackUpgradeSlot = new UIUpgradeSlot(() => StackUpgrade, (item) => StackUpgrade = item)
+            {
+                Top = topDim,
+                Left = rightDim,
+                Description = () => StackUpgrade.IsAir ? Language.GetTextValue("Mods.ItemConduits.UI.StackUpgradeSlot") : null,
+            };
+            stackUpgradeSlot.Left.Pixels += (wireMode.Width.Pixels + panel.PaddingLeft) * 2;
+            stackUpgradeSlot.Top.Pixels -= 2;
+            panel.Append(stackUpgradeSlot);
 
+            topDim.Pixels += roundRobin.Height.Pixels + panel.PaddingLeft;
             panel.Append(wireMode);
         }
 
-        public override void SaveData(TagCompound tag)
+        public override void OnInitializeUIFilters(int index, bool input, UIElement element)
         {
+            var filter = GetFilter(input);
+            if (filter.FiltersCount == 1)
+            {
+                element.Width.Pixels = 190;
+                element.Append(new UIInputText(() => (string)filter[index], (text) => filter[index] = text));
+            }
+            else
+                element.Append(new UIItemFilter(() => (Item)filter[index], (item) => filter[index] = item));
+        }
+
+        public override void SaveData(TagCompound tag, bool probeCopy)
+        {
+            if (!probeCopy)
+            {
+                tag["stackUpgrade"] = ItemIO.Save(stackUpgrade);
+            }
             tag["roundRobin"] = roundRobin;
             tag["priority"] = priority;
             tag["wireMode"] = wireMode;
         }
 
-        public override void LoadData(TagCompound tag)
+
+        public override void LoadData(TagCompound tag, bool probePast)
         {
+            if (!probePast)
+            {
+                stackUpgrade = ItemIO.Load(tag.GetCompound("stackUpgrade"));
+            }
             roundRobin = tag.GetBool("roundRobin");
             priority = tag.GetInt("priority");
             wireMode = tag.GetBool("wireMode");
